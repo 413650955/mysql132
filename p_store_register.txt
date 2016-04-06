@@ -1,0 +1,40 @@
+DELIMITER // 
+drop procedure if exists p_store_register;
+create procedure p_store_register(storeusername varchar(20),storepassword varchar(20))
+	begin
+		declare cou int default 0;
+		declare res varchar(10) default '#';
+		declare t_error int default 0;
+		declare storeid varchar(20) default '1';
+		declare continue handler for sqlexception SET t_error=1;  
+		
+		/*构造id*/
+		select max(store_id) into storeid from t_store;
+		set t_error=0;
+		
+		START TRANSACTION;
+			if (isnull(storeid)=1) then
+				set storeid=LPAD('1',6,0);
+			ELSE
+				set storeid=LPAD(storeid+1,6,0);
+			END IF;
+			/*注册*/
+			select count(*) into cou from t_store where store_username=storeusername;
+			if (cou=0) then
+				insert into t_store(store_id,store_username,store_password) values(storeid,storeusername,storepassword);
+				if (t_error=1)	then
+					ROLLBACK;
+					set res='!';
+				ELSE 
+					COMMIT;
+					set res='#';
+				END IF;
+			ELSE
+				set res='!';
+			END IF;
+			select res;
+	end;
+//
+DELIMITER ;
+call p_store_register('18721382261','111111');
+insert into t_store(store_id,store_username,store_password) values('000001','18212124921','111111');

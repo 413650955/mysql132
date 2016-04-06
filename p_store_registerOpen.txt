@@ -1,0 +1,26 @@
+DELIMITER // 
+drop procedure if exists p_store_registerOpen;
+create procedure p_store_registerOpen(storeusername varchar(20),storeshopname varchar(40),
+storeaddress varchar(100),storekeepsurname varchar(10),storekeepid varchar(20),storepic varchar(50))
+	begin
+		declare res int default 0;
+		declare t_error int default 0;
+		declare continue handler for sqlexception SET t_error=1;  
+		
+		select store_check into res from t_store where store_username=storeusername;
+		if (res=0) then 
+			update t_store set store_shopname=storeshopname,store_address=storeaddress,store_keep_surname=storekeepsurname
+			,store_keep_id=storekeepid,store_pic=storepic,store_check=1 where store_username=storeusername;
+			if (t_error=1) then
+				ROLLBACK;
+			else
+				COMMIT;
+			end if;
+		end if;
+		select store_check into res from t_store where store_username=storeusername;
+		select res;
+	end;
+//
+DELIMITER ;
+
+call p_store_registerOpen('18212124921','一号店','华东理工大学','刘顺裕','310113194102030123','/pic/');

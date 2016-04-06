@@ -1,0 +1,40 @@
+DELIMITER // 
+drop procedure if exists p_user_register;
+create procedure p_user_register(userusername varchar(20),userpassword varchar(20))
+	begin
+		declare cou int default 0;
+		declare res varchar(10) default '#';
+		declare t_error int default 0;
+		declare userid varchar(20) default '1';
+		declare continue handler for sqlexception SET t_error=1;  
+		
+		/*构造id*/
+		select max(user_id) into userid from t_user;
+		set t_error=0;
+		
+		START TRANSACTION;
+			if (isnull(userid)=1) then
+				set userid=LPAD('1',6,0);
+			ELSE
+				set userid=LPAD(userid+1,6,0);
+			END IF;
+			/*注册*/
+			select count(*) into cou from t_user where user_username=userusername;
+			if (cou=0) then
+				insert into t_user(user_id,user_username,user_password) values(userid,userusername,userpassword);
+				if (t_error=1)	then
+					ROLLBACK;
+					set res='!';
+				ELSE 
+					COMMIT;
+					set res='#';
+				END IF;
+			ELSE
+				set res='!';
+			END IF;
+			select res;
+	end;
+//
+DELIMITER ;
+call p_user_register('18721212581','111111');
+insert into t_user(user_id,user_username,user_password,user_surname) values('000001','18721212580','111111','刘顺裕'); 

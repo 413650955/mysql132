@@ -1,0 +1,150 @@
+create database ruangong;
+use ruangong;
+create table t_user(
+	user_username varchar(20) primary key not null,
+	user_id varchar(20) not null,
+	user_password varchar(20) not null,
+	user_surname varchar(20) null,
+	user_money float default 0,
+	user_point int default 0,
+	user_address1 varchar(50) null,
+	user_address2 varchar(50) null,
+	user_address3 varchar(50) null
+);
+insert into t_user(user_id,user_username,user_password,user_surname) values('000001','18721212580','111111','刘顺裕'); 
+create table t_admin(
+	admin_id varchar(10) not null,
+	admin_username varchar(20) not null,
+	admin_password varchar(20) not null,
+	admin_phone varchar(20) not null,
+	admin_money float not null,
+	primary key(admin_id)
+);
+create table t_store(
+	store_id varchar(10) primary key not null,
+	store_username varchar(20) not null,
+	store_password varchar(20) not null,
+	store_shopname varchar(40) null,
+	store_address varchar(100) null,
+	store_permit int default 0,
+	store_check int default 0,
+	store_profit float default 0,
+	store_keep_surname varchar(10) null,
+	store_keep_id char(18) null,
+	store_pic varchar(50)  null
+);
+insert into t_store(store_id,store_username,store_password) values('000001','18212124921','111111');
+insert into t_store(store_id,store_username,store_password) values('000002','18212121231','111111');
+insert into t_store(store_id,store_username,store_password) values('000004','11223113521','111111');
+
+create table t_drug(
+	drug_id varchar(10) not null,
+	drug_permit int not null,
+	drug_gname varchar(20) null,
+	drug_ename varchar(50) null,
+	drug_cname varchar(50) null,
+	drug_name varchar(50) null,
+	drug_element longtext not null,
+	drug_specify varchar(20) not null,
+	drug_quantity longtext not null,
+	drug_matter longtext not null,
+	drug_phm longtext not null,
+	drug_pack varchar(20) not null,
+	drug_pdate datetime not null,
+	drug_time int not null,
+	drug_date datetime not null,
+	drug_number varchar(30) not null,
+	drug_factory varchar(50) not null,
+	drug_react longtext not null,
+	drug_avoid longtext not null,
+	primary key(drug_id)
+);
+create table t_stdrug(
+	drug_id varchar(10) not null,
+	store_id varchar(10) not null,
+	stdrug_price float not null,
+	stdrug_amount int not null,
+	stdrug_name varchar(50) null,
+	primary key(drug_id,store_id);
+);
+create table t_detail(
+	drug_id varchar(10) not null,
+	drug_indicate longtext not null,
+	drug_key1 varchar(10) not null,
+	drug_key2 varchar(10) null,
+	drug_key3 varchar(10) null,
+	drug_key4 varchar(10) null,
+	drug_key5 varchar(10) null,
+);
+create table t_car(
+	user_id varchar(10) not null,
+	drug_id varchar(10) not null,
+	store_id varchar(10) not null,
+	drug_price float not null,
+	car_amount int not null,
+	primary key(user_id,store_id,drug_id)
+);
+create table t_order(
+	order_id varchar(20) not null,
+	user_id varchar(10) not null,
+	order_address varchar(50) not null,
+	drug_id varchar(10) not null,
+	store_id varchar(10) not null,
+	stdrug_price float not null,
+	car_amount int  not null,
+	order_date datetime not null,
+	order_time datetime not null,
+	order_pay int not null,
+	order_state int not null,
+	primary key(order_id)
+);
+create table t_judge(
+	drug_id varchar(10) not null,
+	store_id varchar(10) not null,
+	judge_id varchar(10) not null,
+	judge_txt longtext not null,
+	judge_level int not null,
+	primary key(store_id,drug_id,judge_id)
+)
+create table t_recharge(
+	recharge_id varchar(20) not null,
+	recharge_password varchar(20) not null,
+	recharge_date datetime not null,
+	recharge_state int not null,
+	recharge_time datetime null,
+	primary key(recharge_id)
+);
+create table t_favor(
+	user_id varchar(10) not null,
+	drug_id varchar(10) not null,
+	store_id varchar(10) not null,
+	primary(user_id,drug_id,store_id)
+);
+create table t_complaint(
+	user_id varchar(10) not null,
+	order_id varchar(20) not null,
+	complaint_date datetime not null,
+	complaint_txt longtext not null,
+	complaint_reply longtext null,
+	store_id varchar(10) not null,
+	complaint_state int not null,
+	primary key(user_id,order_id,store_id)
+);
+create table t_refund(
+	order_id varchar(20) not null,
+	refund_reson longtext not null,
+	refund_state int not null
+);
+create table t_back(
+	back_send_id varchar(10) not null,
+	back_recive_id varchar(10) not null,
+	back_id varchar(10) not null,
+	back_txt longtext not null,
+	primary key(back_send_id,back_recive_id,back_id)
+);
+
+
+
+
+
+
