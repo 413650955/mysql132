@@ -8,7 +8,7 @@ storeaddress varchar(100),storekeepsurname varchar(10),storekeepid varchar(20),s
 		declare continue handler for sqlexception SET t_error=1;  
 		
 		select store_check into res from t_store where store_username=storeusername;
-		if (res=0) then 
+		if (res=0 or res=3) then 
 			update t_store set store_shopname=storeshopname,store_address=storeaddress,store_keep_surname=storekeepsurname
 			,store_keep_id=storekeepid,store_pic=storepic,store_check=1,store_pic=storepic 
 			where store_username=storeusername;
@@ -18,6 +18,7 @@ storeaddress varchar(100),storekeepsurname varchar(10),storekeepid varchar(20),s
 				COMMIT;
 			end if;
 		end if;
+		set res=1;
 		select store_check into res from t_store where store_username=storeusername;
 		select res;
 	end;
