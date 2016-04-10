@@ -3,7 +3,7 @@ use ruangong;
 create table t_user(
 	user_username varchar(20) primary key not null,
 	user_id varchar(20) not null,
-	user_password varchar(20) not null,
+	user_password varchar(200) not null,
 	user_surname varchar(20) null,
 	user_money float default 0,
 	user_point int default 0,
@@ -23,7 +23,7 @@ create table t_admin(
 create table t_store(
 	store_id varchar(10) primary key not null,
 	store_username varchar(20) not null,
-	store_password varchar(20) not null,
+	store_password varchar(200) not null,
 	store_shopname varchar(40) null,
 	store_address varchar(100) null,
 	store_permit int default 0,
@@ -31,7 +31,7 @@ create table t_store(
 	store_profit float default 0,
 	store_keep_surname varchar(10) null,
 	store_keep_id char(18) null,
-	store_pic varchar(50)  null
+	store_pic varchar(200)  null
 );
 insert into t_store(store_id,store_username,store_password) values('000001','18212124921','111111');
 insert into t_store(store_id,store_username,store_password) values('000002','18212121231','111111');
@@ -39,7 +39,9 @@ insert into t_store(store_id,store_username,store_password) values('000004','112
 
 create table t_drug(
 	drug_id varchar(10) not null,
-	drug_permit int not null,
+	drug_key1 varchar(10) null,
+	drug_key2 varchar(10) null,
+	drug_indicate longtext not null,
 	drug_gname varchar(20) null,
 	drug_ename varchar(50) null,
 	drug_cname varchar(50) null,
@@ -48,16 +50,39 @@ create table t_drug(
 	drug_specify varchar(20) not null,
 	drug_quantity longtext not null,
 	drug_matter longtext not null,
-	drug_phm longtext not null,
 	drug_pack varchar(20) not null,
 	drug_pdate datetime not null,
 	drug_time int not null,
-	drug_date datetime not null,
 	drug_number varchar(30) not null,
 	drug_factory varchar(50) not null,
 	drug_react longtext not null,
 	drug_avoid longtext not null,
+	drug_lay longtext not null,
 	primary key(drug_id)
+);
+create table t_newdrug(
+	newdrug_id varchar(10) not null,
+	newdrug_key1 varchar(10) null,
+	newdrug_key2 varchar(10) null,
+	newdrug_indicate longtext not null,
+	newdrug_check int not null,
+	newdrug_gname varchar(20) null,
+	newdrug_ename varchar(50) null,
+	newdrug_cname varchar(50) null,
+	newdrug_name varchar(50) null,
+	newdrug_element longtext not null,
+	newdrug_specify varchar(20) not null,
+	newdrug_quantity longtext not null,
+	newdrug_matter longtext not null,
+	newdrug_pack varchar(20) not null,
+	newdrug_pdate datetime not null,
+	newdrug_time int not null,
+	newdrug_number varchar(30) not null,
+	newdrug_factory varchar(50) not null,
+	newdrug_react longtext not null,
+	newdrug_avoid longtext not null,
+	newdrug_lay longtext not null,
+	primary key(newdrug_id)
 );
 create table t_stdrug(
 	drug_id varchar(10) not null,
@@ -65,7 +90,7 @@ create table t_stdrug(
 	stdrug_price float not null,
 	stdrug_amount int not null,
 	stdrug_name varchar(50) null,
-	primary key(drug_id,store_id);
+	primary key(drug_id,store_id
 );
 create table t_detail(
 	drug_id varchar(10) not null,
