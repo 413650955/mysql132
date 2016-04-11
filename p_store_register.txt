@@ -1,6 +1,6 @@
-DELIMITER // 
+﻿DELIMITER // 
 drop procedure if exists p_store_register;
-create procedure p_store_register(storeusername varchar(20),storepassword varchar(20))
+create procedure p_store_register(storeusername varchar(20),storepassword varchar(200))
 	begin
 		declare cou int default 0;
 		declare res varchar(10) default '#';
