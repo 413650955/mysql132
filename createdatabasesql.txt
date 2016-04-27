@@ -39,8 +39,8 @@ insert into t_store(store_id,store_username,store_password) values('000004','112
 
 create table t_drug(
 	drug_id varchar(10) not null,
-	drug_key1 varchar(10) null,
-	drug_key2 varchar(10) null,
+	drug_key1 varchar(30) null,
+	drug_key2 varchar(30) null,
 	drug_indicate longtext not null,
 	drug_gname varchar(20) null,
 	drug_ename varchar(50) null,
@@ -51,13 +51,14 @@ create table t_drug(
 	drug_quantity longtext not null,
 	drug_matter longtext not null,
 	drug_pack varchar(20) not null,
-	drug_pdate datetime not null,
+	drug_pdate datetime null,
 	drug_time int not null,
 	drug_number varchar(30) not null,
 	drug_factory varchar(50) not null,
 	drug_react longtext not null,
 	drug_avoid longtext not null,
 	drug_lay longtext not null,
+	drug_shape longtext not null,
 	primary key(drug_id)
 );
 create table t_newdrug(
