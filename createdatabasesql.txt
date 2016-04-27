@@ -61,7 +61,8 @@ create table t_drug(
 	primary key(drug_id)
 );
 create table t_newdrug(
-	newdrug_id varchar(10) not null,
+	store_id varchar(10) not null,
+	newdrug_id int not null auto_increment,
 	newdrug_key1 varchar(10) null,
 	newdrug_key2 varchar(10) null,
 	newdrug_indicate longtext not null,
