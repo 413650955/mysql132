@@ -22,16 +22,16 @@ create table t_admin(
 );
 create table t_store(
 	store_id varchar(10) primary key not null,
-	store_username varchar(20) not null,
 	store_password varchar(200) not null,
-	store_shopname varchar(40) null,
+	store_name varchar(40) null,
+	store_phone varchar(20) null,
 	store_address varchar(100) null,
 	store_permit int default 0,
 	store_check int default 0,
 	store_profit float default 0,
-	store_keep_surname varchar(10) null,
+	store_keep varchar(10) null,
 	store_keep_id char(18) null,
-	store_pic varchar(200)  null
+	store_keep_phone varchar(200)  null
 );
 insert into t_store(store_id,store_username,store_password) values('000001','18212124921','111111');
 insert into t_store(store_id,store_username,store_password) values('000002','18212121231','111111');
@@ -39,8 +39,8 @@ insert into t_store(store_id,store_username,store_password) values('000004','112
 
 create table t_drug(
 	drug_id varchar(10) not null,
-	drug_key1 varchar(30) null,
-	drug_key2 varchar(30) null,
+	drug_key1 varchar(10) null,
+	drug_key2 varchar(10) null,
 	drug_indicate longtext not null,
 	drug_gname varchar(20) null,
 	drug_ename varchar(50) null,
@@ -51,14 +51,13 @@ create table t_drug(
 	drug_quantity longtext not null,
 	drug_matter longtext not null,
 	drug_pack varchar(20) not null,
-	drug_pdate datetime null,
+	drug_pdate datetime not null,
 	drug_time int not null,
 	drug_number varchar(30) not null,
 	drug_factory varchar(50) not null,
 	drug_react longtext not null,
 	drug_avoid longtext not null,
 	drug_lay longtext not null,
-	drug_shape longtext not null,
 	primary key(drug_id)
 );
 create table t_newdrug(

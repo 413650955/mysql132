@@ -1,6 +1,6 @@
-﻿DELIMITER // 
+DELIMITER // 
 drop procedure if exists p_store_register;
-create procedure p_store_register(storeusername varchar(20),storepassword varchar(200))
+create procedure p_store_register(storephone varchar(20),storepassword varchar(200))
 	begin
 		declare cou int default 0;
 		declare res varchar(10) default '#';
@@ -19,9 +19,9 @@ create procedure p_store_register(storeusername varchar(20),storepassword varcha
 				set storeid=LPAD(storeid+1,6,0);
 			END IF;
 			/*注册*/
-			select count(*) into cou from t_store where store_username=storeusername;
+			select count(*) into cou from t_store where store_phone=storephone;
 			if (cou=0) then
-				insert into t_store(store_id,store_username,store_password) values(storeid,storeusername,storepassword);
+				insert into t_store(store_id,store_phone,store_password) values(storeid,storephone,storepassword);
 				if (t_error=1)	then
 					ROLLBACK;
 					set res='!';
@@ -37,4 +37,4 @@ create procedure p_store_register(storeusername varchar(20),storepassword varcha
 //
 DELIMITER ;
 call p_store_register('18721382261','111111');
-insert into t_store(store_id,store_username,store_password) values('000001','18212124921','111111');
+insert into t_store(store_id,store_phone,store_password) values('000001','18212124921','111111');
