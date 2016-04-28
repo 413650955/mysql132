@@ -11,7 +11,6 @@ create table t_user(
 	user_address2 varchar(50) null,
 	user_address3 varchar(50) null
 );
-insert into t_user(user_id,user_username,user_password,user_surname) values('000001','18721212580','111111','刘顺裕'); 
 create table t_admin(
 	admin_id varchar(10) not null,
 	admin_username varchar(20) not null,
@@ -33,9 +32,6 @@ create table t_store(
 	store_keep_id char(18) null,
 	store_keep_phone varchar(200)  null
 );
-insert into t_store(store_id,store_username,store_password) values('000001','18212124921','111111');
-insert into t_store(store_id,store_username,store_password) values('000002','18212121231','111111');
-insert into t_store(store_id,store_username,store_password) values('000004','11223113521','111111');
 
 create table t_drug(
 	drug_id varchar(10) not null,
