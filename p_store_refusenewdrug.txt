@@ -1,0 +1,31 @@
+DELIMITER // 
+drop procedure if exists p_admin_refusenewdrug;
+create procedure p_admin_refusenewdrug(newdrugid int,adminid varchar(20),storeid varchar(20),refusereason varchar(100))
+	begin
+		declare messt varchar(10) default 'a';
+		declare mesrt varchar(10) default 's';
+		declare mesid varchar(20);
+		declare drugid varchar(20);
+		declare res varchar(10) default '#';
+		declare t_error int default 0;
+		declare continue handler for sqlexception SET t_error=1;  
+		
+		/*构造id*/
+		select max(drug_id) into drugid from t_drug;
+		set t_error=0;
+	
+		START TRANSACTION;			
+		update t_newdrug set newdrug_check=2 where newdrug_id=newdrugid;
+		insert into t_message(mes_s_t,mes_s_id,mes_r_t,mes_r_id,mes_txt) values(messt,adminid,mesrt,storeid,refusereason);
+			if (t_error=1)	then
+				ROLLBACK;
+				set res='!';
+			ELSE 
+				COMMIT;
+				set res='#';
+			END IF;
+		select res;
+	end;
+//
+DELIMITER ;
+call p_admin_refusenewdrug(2,'000002','1','没有理由');

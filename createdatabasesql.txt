@@ -47,7 +47,7 @@ create table t_drug(
 	drug_quantity longtext not null,
 	drug_matter longtext not null,
 	drug_pack varchar(20) not null,
-	drug_pdate datetime not null,
+	drug_pdate datetime null,
 	drug_time int not null,
 	drug_number varchar(30) not null,
 	drug_factory varchar(50) not null,

@@ -1,0 +1,52 @@
+DELIMITER // 
+drop procedure if exists p_admin_acceptnewdrug;
+create procedure p_admin_acceptnewdrug(newdrugid int,adminid varchar(20),storeid varchar(20))
+	begin
+		declare messt varchar(10) default 'a';
+		declare mesrt varchar(10) default 's';
+		declare mesid varchar(20);
+		declare mestxt longtext;
+		declare drugid varchar(20);
+		declare res varchar(10) default '#';
+		declare t_error int default 0;
+		declare continue handler for sqlexception SET t_error=1;  
+		
+		/*构造id*/
+		select max(drug_id) into drugid from t_drug;
+		set t_error=0;
+	
+		START TRANSACTION;
+			if (isnull(drugid)=1) then
+				set drugid=LPAD('1',6,0);
+			ELSE
+				set drugid=LPAD(drugid+1,6,0);
+			END IF;
+			/*先修改状态->插入t_drug*/
+			
+			update t_newdrug set newdrug_check=1 where newdrug_id=newdrugid;
+			insert into t_drug(
+			drug_id,drug_key1,drug_key2,drug_indicate,
+			drug_gname,drug_ename,drug_cname,drug_name,
+			drug_element,drug_specify,drug_quantity,drug_matter,
+			drug_pack,drug_pdate,drug_time,drug_number,drug_factory,
+			drug_react,drug_avoid,drug_lay)
+			select drugid,newdrug_key1,newdrug_key2,newdrug_indicate,
+			newdrug_gname,newdrug_ename,newdrug_cname,newdrug_name,
+			newdrug_element,newdrug_specify,newdrug_quantity,newdrug_matter,
+			newdrug_pack,newdrug_pdate,newdrug_time,newdrug_number,newdrug_factory,
+			newdrug_react,newdrug_avoid,newdrug_lay
+			from t_newdrug where newdrug_id=newdrugid;
+			set mestxt=concat('您的新药通过批准，药品id:',drugid);
+			insert into t_message(mes_s_t,mes_s_id,mes_r_t,mes_r_id,mes_txt) values(messt,adminid,mesrt,storeid,mestxt);
+			if (t_error=1)	then
+				ROLLBACK;
+				set res='!';
+			ELSE 
+				COMMIT;
+				set res='#';
+			END IF;
+		select res;
+	end;
+//
+DELIMITER ;
+call p_admin_acceptnewdrug(2,'000002','1');
