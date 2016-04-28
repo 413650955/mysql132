@@ -15,3 +15,13 @@ call p_store_register('18721212580','111111');
 注意 返回值 如果为1，则说明 商家之前是没有申请成功的，现在提交了新的申请，store_check变为了1，说明 申请正在审核中
 call p_store_registerOpen('18721382261','一号店','华东理工大学','刘顺裕','310113194102030123','/softProject/drugstore/store/pic/18212124921/');
 2016-4-10 20:43:10
+
+同意添加新药 （newdrug_id,store_id）
+call p_admin_agreeNewDrug('1','000001');
+返回‘#’则发送这个新药的同意请求给店家，并且把新药添加到统一药品库，然后在新药表中删除这个记录。
+返回‘！’则事务不成功。
+
+拒绝添加新药（newdrug_id,store_id，refusereason）
+call p_admin_refuseNewDrug('1','000001','没有理由');
+返回‘#’则新药表删除这个记录，并发送消息到药店。
+返回 ‘！’则事务不成功。
