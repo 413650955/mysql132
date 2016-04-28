@@ -157,12 +157,14 @@ create table t_refund(
 	refund_reson longtext not null,
 	refund_state int not null
 );
-create table t_back(
-	back_send_id varchar(10) not null,
-	back_recive_id varchar(10) not null,
-	back_id varchar(10) not null,
-	back_txt longtext not null,
-	primary key(back_send_id,back_recive_id,back_id)
+create table t_message(
+	mes_s_t varchar(20) not null,
+	mes_s_id varchar(20) not null,
+	mes_r_t varchar(20) not null,
+	mes_r_id varchar(20) not null,
+	mes_id int not null auto_increment,
+	mes_txt longtext not null,
+	primary key(mes_id)
 );
 
 
